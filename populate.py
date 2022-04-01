@@ -1,12 +1,12 @@
 from dbapp import app, db
 import dbapp
 from dbapp import app, db
-from dbapp.models import Agent, House, Office, Sale, City, Seller
+from dbapp.model import Agent, House, Office, Sale, City, Seller
 
 import names
 from uszipcode import SearchEngine
 import geonamescache
-from random import sample, randint, uniform
+from random import sample, randint
 
 def create_agents(agents):
 
@@ -61,7 +61,9 @@ def create_cities_and_buildings(cities):
     sample_cities = sample(all_cities, cities) #remove duplicates if any
 
     agents = Agent.query.all()
-    office_id = 0
+    office_id = 1
+
+    problem = False
 
     print('\nGenerating City, Office and House Data. This might take a while...\n')
 
@@ -70,47 +72,54 @@ def create_cities_and_buildings(cities):
         try:
             print('CITY', zipcodes[0].major_city, zipcodes[0].zipcode, all_states[zipcodes[0].state])
             db.session.add(City(name=zipcodes[0].major_city, zip_code=zipcodes[0].zipcode, state=all_states[zipcodes[0].state]))
+            problem = False
         except:
+            problem = True
             continue
 
         for building in zipcodes:
-            sample_office_agents = sample(agents, 5)
-            city_address = f'{sample_cities[city_id]} {building.zipcode} {all_states[building.state]}'
-
-            #unique cities guaranteed by sampling without replacement
-            print('OFFICE', sample_cities[city_id], building.zipcode, all_states[building.state], sample_office_agents)
-            db.session.add(Office(address = city_address, city_id = city_id, agents_offices = sample_office_agents))
-
-            #give each house a surname as its fictitious address
-            house_address = f'{names.get_last_name()}, {city_address}'
-            guess = uniform(0, 1)
-            if guess <= 0.1: 
-                guess = 0.05
-
-            #round to .5 as you can have .5 baths in real estate
-            bathrooms = round(guess*20)*0.5
+            if problem:
+                break
             
-            #assume ratio of 1.8 baths to every 3 bedrooms https://www.propertyreporter.co.uk/at-home/what-is-the-ideal-bedroom-bathroom-ratio.html
-            bedrooms = int(round(bathrooms * 1.6)) 
+            else:
+                sample_office_agents = sample(agents, 5)
+                city_address = f'{sample_cities[city_id]} {building.zipcode} {all_states[building.state]}'
 
-            #assume bedrooms account for 29% https://nahbclassic.org/fileUpload_details.aspx?contentTypeID=3&contentID=216616&subContentID=541360
-            sq_footage = round((224*bedrooms*100)/29)
+                #unique cities guaranteed by sampling without replacement
+                print('OFFICE', sample_cities[city_id], building.zipcode, all_states[building.state], sample_office_agents)
+                db.session.add(Office(address = city_address, city_id = city_id+1, agents_offices = sample_office_agents))
 
-            #$185 price/sqft https://www.rocketmortgage.com/learn/price-per-square-foot#:~:text=The%20current%20median%20price%20per,or%20lower%20than%20this%20number.
-            price = sq_footage * 185
+                #give each house a surname as its fictitious address
+                house_address = f'{names.get_last_name()}, {city_address}'
+                guess = randint(1, 20)
 
-            #randomly allocate property
-            seller_id = randint(1,cities)
+                #round to .5 as you can have .5 baths in real estate
+                bathrooms = guess/2  #low-.5, high-10
+                
+                #assume ratio of 1.8 baths to every 3 bedrooms https://www.propertyreporter.co.uk/at-home/what-is-the-ideal-bedroom-bathroom-ratio.html
+                bedrooms = round(bathrooms * 1.6)
 
-            #cap number of agents per sale at 3
-            guess = randint(1,4)
-            sample_house_agents = sample(agents, guess)
+                #assume bedrooms account for 29% ~ 3.448276 https://nahbclassic.org/fileUpload_details.aspx?contentTypeID=3&contentID=216616&subContentID=541360
+                sq_footage = round(((224-(40/guess))* bathrooms * 1.6 *3.448276), 2)
 
-            print('HOUSE', house_address, bathrooms, bedrooms, sq_footage, price, city_id, office_id, seller_id, sample_house_agents)
-            db.session.add(House(address=house_address, bathrooms=bathrooms, bedrooms=bedrooms, sq_footage=sq_footage, price=price, 
-                                city_id=city_id, office_id=office_id, seller_id=seller_id, agents_houses=sample_house_agents))
+                #listing fee (to spread values out)
+                listing_fee = 1+ (guess/100)
 
-            office_id += 1
+                #$185 price/sqft https://www.rocketmortgage.com/learn/price-per-square-foot#:~:text=The%20current%20median%20price%20per,or%20lower%20than%20this%20number.
+                price = round((sq_footage * (185-(40/guess)) * listing_fee), 2)
+
+                #randomly allocate property
+                seller_id = randint(1,cities)
+
+                #cap number of agents per sale at 3
+                guess = randint(1,4)
+                sample_house_agents = sample(agents, guess)
+
+                print('HOUSE', house_address, bathrooms, bedrooms, sq_footage, price, city_id+1, office_id, seller_id, sample_house_agents)
+                db.session.add(House(address=house_address, bathrooms=bathrooms, bedrooms=bedrooms, sq_footage=sq_footage, price=price, 
+                                    city_id=city_id+1, office_id=office_id, seller_id=seller_id, agents_houses=sample_house_agents))
+
+                office_id += 1
         print('\n')
     db.session.commit()
 

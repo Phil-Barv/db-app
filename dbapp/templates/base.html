@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Philip Barven">
+    <meta name="description" content="This is a DB App created for the purposes of cs162 Database-App Assignment.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB-APP</title>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'images/hasbulla.png')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link href="/static/css/style1.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <section class="hero is-primary is-fullheight">
+
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        <div class="navbar-end" id="navigation">
+                            <a href="{{url_for('admin.index')}}" id="page1" class="navbar-item">
+                                Home
+                            </a>
+                            <a href="{{url_for('login')}}" id="page2" class="navbar-item">
+                                Login
+                            </a>
+                            <a href="{{url_for('signup')}}" id="page3" class="navbar-item">
+                                Sign Up
+                            </a>
+                            <a href="{{url_for('logout')}}" id="page4" class="navbar-item">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        {% with messages = get_flashed_messages()%}
+        {% if messages %}
+            {% for msg in messages %}
+                <center><p>{{msg}}</p></center>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>

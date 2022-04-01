@@ -1,0 +1,153 @@
+
+/* ---------------------------------------------------
+    Helper CSS Doc For Login Views
+----------------------------------------------------- */
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+.hero.is-fullheight {
+    background-color: cadetblue;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hero-head{
+    padding: 20px;
+}
+
+.navbar {
+    height: 55px;
+    margin: 0;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 3px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    background-color: rgba(95, 158, 160, 0.493) !important;
+}
+
+.title {
+    margin: 0;
+    margin-top: -120px;
+    padding-bottom: 20px;
+    font-size: 1.9em;
+}
+
+.subtitle {
+    margin: 0;
+    font-size: 1.2em;
+    color: rgb(201, 204, 207) !important;
+}
+
+#page1 {
+    color: rgba(106, 17, 203, 1) !important;
+}
+
+.box {
+    font-size: small;
+    margin-top: -150px;
+    padding-top: 35px;
+    min-height: 280px;
+}
+
+.control {
+    padding-bottom: 10px;
+}
+
+.input {
+    font-size: large !important;
+    height: 40px;
+    padding-left: 20px;
+}
+
+.checkbox {
+    padding-top: 20px;
+}
+
+.button {
+    font-size: large !important;
+    height: 45px;
+    padding-left: 20px;
+}
+
+
+.has-text-centered {
+    position: relative;
+}
+
+#linechart {
+    margin-top: -17px;
+    background-color: #ddd;
+    border: 10px inset rebeccapurple;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#btn-1 {
+    margin-top: -200px;
+}
+
+#btn-2 {
+    margin-top: -140px;
+}
+
+#btn-3 {
+    margin-top: -80px;
+}
+
+#btn-4 {
+    margin-top: -20px;
+}
+
+#btn-5 {
+    margin-top: 40px;
+}
+
+#btn-6 {
+    margin-top: 100px;
+}
+
+#btn-7 {
+    margin-top: 160px;
+}
+
+#btn-8 {
+    margin-top: 220px;
+    margin-right: -170px;
+}
+
+#btn-9 {
+    margin-top: 280px;
+    margin-right: -170px;
+    background-color: cadetblue;
+}
+
+.styled-btn {
+    width: 170px;
+    margin-right: -60px;
+    margin-bottom: -160px;
+    float: right;
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 11px;
+    background-color: rebeccapurple;
+    background-image: linear-gradient(to top left,
+                                      rgba(0, 0, 0, .2),
+                                      rgba(0, 0, 0, .2) 30%,
+                                      rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+}
+
+.styled-btn:hover {
+    background-color: cadetblue;
+}
+
+.styled-btn:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}

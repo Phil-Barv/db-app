@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<button class="styled-btn" type="button" id="btn-1">
+    <a href="{{url_for('analytics_agents_offices')}}">Agents Per Office</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-2"> 
+    <a href="{{url_for('analytics_houses_agents')}}">Houses Per Agent</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-3"> 
+    <a href="{{url_for('analytics_houses_cities')}}">Houses Per City</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-4"> 
+    <a href="{{url_for('analytics_houses_prices')}}">Houses Per Price</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-5"> 
+    <a href="{{url_for('analytics_houses_offices')}}">Houses Per Office</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-6"> 
+    <a href="{{url_for('analytics_houses_sellers')}}">Houses Per Seller</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-7"> 
+    <a href="{{url_for('analytics_offices_cities')}}">Offices Per City</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-8"> 
+    <a href="{{url_for('analytics')}}">Annual Sales</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-9"> 
+    <a href="{{url_for('index')}}">Dunder Mifflin</a>
+</button>
+
+<canvas id ="linechart" width="1050" height="550"></canvas>
+    <script src="{{ url_for('static', filename='javascript/chart.js') }}"></script>
+
+    <script>
+        var ctx = document.getElementById('linechart').getContext('2d');
+        var lineChart = new Chart(ctx, {
+            type: {{ types | safe }},
+            data: {
+                labels: {{ labels | safe }},
+                datasets: [
+                    {
+                        label: {{ titles | safe}},
+                        data: {{ values | safe }},
+                        fill: false,
+                        borderColor: "rgb(75, 192, 192)",
+                        lineTension: 0.1,
+                        backgroundColor : 'cadetblue'
+                    }
+                ]
+            }, 
+            options: {
+                responsive: false
+             }
+        });
+    
+    </script>
+{% endblock %}

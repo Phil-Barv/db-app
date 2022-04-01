@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_admin import Admin
 
 app = Flask(__name__)
 
@@ -10,12 +9,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #removes modifications to d
 
 # set bootswatch theme
 app.config['FLASK_ADMIN_SWATCH'] = 'yeti'
+app.config['FLASK_ADMIN_FLUID_LAYOUT'] = True
 
 #create db instance
 db = SQLAlchemy(app)
-
-#create admin instance
-admin = Admin(app, name="Dunder Mifflin Realtors", template_mode='bootstrap4')
 
 #import routes after creating app and db to prevent circular import
 from dbapp import routes
