@@ -97,7 +97,7 @@ def insights():
         task(),
     ]
 
-    test_query()
+    #test_query()
     return render_template('insights.html', task_list=task_list)
 
 @app.route('/analytics/annual_sales', methods=['POST','GET'])
@@ -113,7 +113,7 @@ def analytics_annual_sales():
 
     for sold in db.session.query(sale.Sale):
         if sold.date_added >= start_date and sold.date_added <= end_date:
-            raw_data[str(sold.date_added.strftime("%d/%m"))] = int(sold.commission_list[0].house_price)
+            raw_data[str(sold.date_added.strftime("%d/%m"))] = int(sold.house_price)
 
     for entry in raw_data:
         month = datetime.strptime(entry,"%d/%m").strftime("%m")
