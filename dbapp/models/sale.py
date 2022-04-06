@@ -3,7 +3,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import  current_user
 from datetime import datetime
 from dbapp import db
-from dbapp.models.joins import agents_sales
+from dbapp.models.joins import agents_sales, buyers_sales
 
 
 class Sale(db.Model):
@@ -11,18 +11,31 @@ class Sale(db.Model):
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
     date_added = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
+    #one sale can have many commissions depending on no. of listing agents, but each individual commission can have only one sale
+    commission_list = db.relationship('Commission', lazy='select', backref=db.backref('sale', lazy='joined'))
+    house_price = db.Column(db.Numeric(11, 2), nullable=False)
+
     #many to many relationship to agents
     agents_sales = db.relationship('Agent', secondary=agents_sales, lazy='subquery',
                                     backref=db.backref('sales', lazy=True))
 
+    buyers_sales = db.relationship('Buyer', secondary=buyers_sales, lazy='subquery',
+                                backref=db.backref('sales', lazy=True))
+
     def __repr__(self):
-        return f'Sale by: {self.agents_sales} House: {self.house_id}'
+        return f'Sale {self.id} bought House {self.house_id}'
+
 
 class SalesView(ModelView):
-    column_list = ('id', 'house', 'agents_sales', 'date_added')
-    column_filters = ('id', 'house', 'agents_sales', 'date_added')
-    column_labels = {'id':'ID', 'house': 'Property Details', 'agents_sales': 'Sold By', 'date_added': 'Sale Date'}
+    column_list = ('id', 'buyers_sales', 'houses', 'agents_sales', 'commission_list', 'date_added')
+    column_filters = ('id', 'agents_sales', 'date_added')
+
+    column_labels = {'id':'ID', 'buyers_sales':'Buyer(s)', 'houses': 'Property Details', 'agents_sales': 'Assigned Agent(s)', 
+                     'commission_list':'Commission(s)', 'date_added': 'Sale Date'}
+
     column_searchable_list = ['date_added']
+
+    column_default_sort = [('date_added', True)] #displays sorted view of bought and high price
 
     def is_accessible(self):
         return current_user.is_authenticated

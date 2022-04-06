@@ -60,10 +60,10 @@
 
         <ul class="list-unstyled CTAs">
             <li>
-                <a href="{{url_for('analytics')}}" class="download">Analytics</a>
+                <a href="{{url_for('analytics_annual_sales')}}" class="download">Analytics</a>
             </li>
             <li>
-                <a href="{{url_for('contact')}}" class="article">Contact Us</a>
+                <a href="{{url_for('insights')}}" class="article">Monthly Insights</a>
             </li>
         </ul>
     </nav>
@@ -87,7 +87,7 @@
                             {{ layout.menu_links() }}
                             <p>Welcome, {{current_user.name.capitalize()}}</p>
                             <a href="{{url_for('index')}}" id="page1" class="navbar-item">
-                                Company Profile 🏡
+                                Company Profile 🏠
                             </a>
 
                             <a href="{{url_for('logout')}}" id="page2" class="navbar-item">

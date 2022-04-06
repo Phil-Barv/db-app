@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<button class="styled-btn" type="button" id="btn-10">
+    <a href="{{url_for('analytics_agents_offices')}}">Top 5 Agents</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-11"> 
+    <a href="{{url_for('analytics_houses_agents')}}">Top 5 Offices</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-12"> 
+    <a href="{{url_for('analytics_houses_cities')}}">Top 5 Sales</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-13"> 
+    <a href="{{url_for('analytics_annual_sales')}}">Analytics</a>
+</button>
+
+
+<div class="render_list" id ="linechart">
+    <h1>To Do</h1>
+    {% for task in task_list %}
+    <div class="row">
+        <div class="column left">
+            <p>{{task.description}}</p>
+        </div>
+        <div class="column right">
+            <p id="p1">{{task.title}}</p><p>
+            <button><a href="/update/{{task.id}}">99</a></button>
+            <button><a href="/delete/{{task.id}}" onclick=" return customDeleteAlert();">12.12.12</a></button></p>
+        </div>   
+    </div>             
+    {% endfor %}
+</div>
+
+{% endblock %}

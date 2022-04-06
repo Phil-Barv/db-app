@@ -139,7 +139,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul.components {
-    padding-top: 15px;
+    padding-top: 9px;
     border-bottom: 1px solid #888a8b;
 }
 
@@ -189,7 +189,9 @@ ul ul a {
 }
 
 ul.CTAs {
-    padding: 20px;
+    margin-top: 25px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 
 ul.CTAs a {
@@ -307,6 +309,103 @@ a.article:hover {
 
 .subtitle {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1.4em;
     color: rgb(201, 204, 207) !important;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.order-card {
+    color: #fff;
+}
+
+#big {
+    background: linear-gradient(45deg,#af77b1,#af95cc);
+    width: 620px;
+    height: 450px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#big h6 {
+    text-align: left !important;
+}
+
+.bg-c-blue {
+    background: linear-gradient(45deg,#6b7e93,#80a1b1);
+}
+
+.bg-c-green {
+    background: linear-gradient(45deg,#99b177,#99cc95);
+}
+
+.bg-c-yellow {
+    background: linear-gradient(45deg,#f8cb8b,#cab79e);
+}
+
+.bg-c-pink {
+    background: linear-gradient(45deg,#fc90a2,#c47a86);
+    padding-bottom: 0!important;
+}
+
+.bg-c-pink p {
+    padding-top: 10px !important;
+    height: 72px;
+}
+
+.card {
+    padding-left: -50px;
+    padding-bottom: 15px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    box-shadow: 0 10px 24px 6px rgba(4,26,55,0.16);
+    border: none;
+    margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.order-card i {
+    font-size: 28px;
+}
+
+.f-left {
+    float: left;
+}
+
+.f-right {
+    float: right;
+    padding-left: 5px;
+    font-size: medium;
+}
+
+.col {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.row {
+    margin-left: -65px;
+}
+
+.m-b-20 {
+    font-size: 1.1em !important;
+    padding-bottom: 15px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.m-b-0 {
+    padding-top: 30px;
+    margin: 0;
+    color: #333333;
 }

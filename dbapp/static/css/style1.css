@@ -75,7 +75,7 @@
 #linechart {
     margin-top: -17px;
     background-color: #ddd;
-    border: 10px inset rebeccapurple;
+    border: 10px inset rgb(132, 81, 183);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -119,24 +119,100 @@
     margin-top: 280px;
     margin-right: -170px;
     background-color: cadetblue;
+
 }
 
+/* Insights */
+.render_list {
+    width: 1050px;
+    height: 550px;
+}
+
+.render_list h1 {
+    font-weight: 500;
+    color: gray;
+    margin: 10px;
+}
+
+.row {
+    border: cadetblue 2px solid;
+    display: inline-flex;
+    margin: 5px;
+    padding: 0%;
+    justify-content: space-between;
+    width: 95%;
+    height: 85px;
+    color: #000 !important;
+}
+
+.left {
+    margin: auto;
+    width: 85%;
+    padding: 3px;
+}
+    
+.right {
+    width: 35%;
+    text-align: center;
+    padding-right: -300px !important;
+}
+    
+.container::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.render_list a {
+    font-size: smaller;
+    text-decoration: none;
+}
+
+.column button {
+    border-radius: 50px;
+    background-color: cadetblue;
+    font-weight: 900;
+    margin: 10px;
+}
+    
+#btn-10 {
+    margin-top: -140px;
+    margin-right: -55px;
+}
+
+#btn-11 {
+    margin-top: -80px;
+    margin-right: -55px;
+}
+
+#btn-12 {
+    margin-top: -20px;
+    margin-right: -55px;
+}
+
+#btn-13 {
+    margin-top: 40px;
+    margin-right: -55px;
+    background-color: cadetblue;
+}
+
+
 .styled-btn {
-    width: 170px;
+    opacity: 0.85;
+    width: 167px;
     margin-right: -60px;
     margin-bottom: -160px;
     float: right;
     border: 0;
-    line-height: 2.5;
-    padding: 0 20px;
+    line-height: 1.9;
     font-size: 1rem;
     text-align: center;
     color: #fff;
     text-shadow: 1px 1px 1px #000;
-    border-radius: 11px;
-    background-color: rebeccapurple;
+    border-radius: 27px;
+    background-color: rgb(132, 81, 183);
     background-image: linear-gradient(to top left,
-                                      rgba(0, 0, 0, .2),
+                                      rgba(206, 195, 195, 0.2),
                                       rgba(0, 0, 0, .2) 30%,
                                       rgba(0, 0, 0, 0));
     box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),

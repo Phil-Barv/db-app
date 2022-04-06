@@ -3,6 +3,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin, current_user
 from datetime import datetime
 from dbapp import db
+from dbapp.routes import bcrypt
 
 #created this unnecessary class cause I didn't want to delete my login and signup forms 
 class Admins(db.Model, UserMixin):
@@ -11,6 +12,12 @@ class Admins(db.Model, UserMixin):
     email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(60), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = bcrypt.generate_password_hash(password)
+        
 
     def __repr__(self):
         return f'Admin {self.id}: {self.name}'

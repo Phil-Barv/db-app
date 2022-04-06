@@ -7,7 +7,7 @@ from dbapp import db
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
-    zip_code = db.Column(db.Integer, nullable=False) #zipcodes are NOT unique https://www.quora.com/Can-two-cities-share-the-same-ZIP-code
+    zip_code = db.Column(db.String, nullable=False) #zipcodes are NOT unique https://www.quora.com/Can-two-cities-share-the-same-ZIP-code
     state = db.Column(db.String(60), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     
