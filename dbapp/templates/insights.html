@@ -2,36 +2,54 @@
 
 {% block content %}
 <button class="styled-btn" type="button" id="btn-10">
-    <a href="{{url_for('analytics_agents_offices')}}">Top 5 Agents</a>
+    <a href="{{url_for('insights_get_top_5_agents')}}">Top 5 Agents</a>
 </button>
 
 <button class="styled-btn" type="button" id="btn-11"> 
-    <a href="{{url_for('analytics_houses_agents')}}">Top 5 Offices</a>
+    <a href="{{url_for('insights_get_top_5_offices')}}">Top 5 Offices</a>
 </button>
 
 <button class="styled-btn" type="button" id="btn-12"> 
-    <a href="{{url_for('analytics_houses_cities')}}">Top 5 Sales</a>
+    <a href="{{url_for('insights_get_avg_selling_price')}}">AVG Selling Price</a>
 </button>
 
 <button class="styled-btn" type="button" id="btn-13"> 
+    <a href="{{url_for('insights_get_avg_listing_time')}}">AVG Listing Time</a>
+</button>
+
+<button class="styled-btn" type="button" id="btn-14"> 
     <a href="{{url_for('analytics_annual_sales')}}">Analytics</a>
 </button>
 
 
 <div class="render_list" id ="linechart">
-    <h1>To Do</h1>
-    {% for task in task_list %}
-    <div class="row">
-        <div class="column left">
-            <p>{{task.description}}</p>
-        </div>
-        <div class="column right">
-            <p id="p1">{{task.title}}</p><p>
-            <button><a href="/update/{{task.id}}">99</a></button>
-            <button><a href="/delete/{{task.id}}" onclick=" return customDeleteAlert();">12.12.12</a></button></p>
-        </div>   
-    </div>             
-    {% endfor %}
+    {% if info_list[1]|length > 0 %}
+        <h1>{{ info_list[0] }}</h1>
+        {% for info in info_list[1] %}
+            <div class="row">
+                <div class="column left">
+                    <p>{{ info[0] }}</p>
+                </div>
+                <div class="column right">
+                    <p id="p1">{{ info[1] }}</p><p>
+                    <button><a href="#">Sales: {{ info[2] }}</a></button>
+                    <button><a href="#">{{ currentMonth }}</a></button></p>
+                </div>   
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1>Title</h1>
+        <div class="row">
+            <div class="column left">
+                <p>No sales recorded for this month</p>
+            </div>
+            <div class="column right">
+                <p id="p1"> - - - </p><p>
+                <button><a href="#"> 0 </a></button>
+                <button><a href="#">{{currentMonth}}</a></button></p>
+            </div>   
+        </div> 
+    {% endif %}
 </div>
 
 {% endblock %}

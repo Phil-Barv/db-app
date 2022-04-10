@@ -14,6 +14,9 @@ class Office(db.Model):
     #one office can have many houses, but each house can have only one office
     house_list = db.relationship('House', backref='office', lazy=True)
 
+    #one office can have many sales, but each sale can have only one office because one house can have only one office
+    sale_list = db.relationship('Sale', backref='office', lazy=True)
+
     #many to many relationship to agents
     agents_offices = db.relationship('Agent', secondary=agents_offices, lazy='subquery',
                                     backref=db.backref('offices', lazy=True))

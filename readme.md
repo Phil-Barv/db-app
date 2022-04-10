@@ -1,6 +1,7 @@
 # DB-APP_162
 
-This is a Database app that models a large realtor company with multiple property listings, agents, locations, and sellers. The app is built on the Flask micro-framework, using SQLAlchemy database models to store the data.
+This is a Database app that models a large realtor company with multiple property listings, agents, locations, and sellers. The app is built on the Flask micro-framework, using SQLAlchemy database models to store the data. The dashboard features long-term summaries, with detailed analytics
+in the analystics section, and monthly summaries. As of now, the views have been implemented for view-only purposes rather than edit/update purposes.
 
 
 ### Getting the app running
@@ -14,7 +15,7 @@ This is a Database app that models a large realtor company with multiple propert
 python3.6 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
-python3.6 populate.py #skip if database population not required
+python3.6 populate.py #required to populate database
 python3.6 app.py
 ```
 
@@ -37,4 +38,10 @@ python3.6 app.py
 ```
 
 4. Once you run the commands, the app will spool up and give you a link in the terminal (usually: http://127.0.0.1:5000/). If you choose to automatically populate the database, it will take some time to generate and add data.
-5. Paste the link into your favorite browser (Google Chrome is recommended) and voila! You now have a task management system. Enjoy!
+5. Paste the link into your favorite browser (Google Chrome is recommended) and voila! You now have a database management system. Enjoy!
+
+As a side note, the app also features 4 in-built tests to confirm that the required SQL queries return the right results. You can run them once you have populated the database by using the following command:
+
+```python3
+python3.6 test.py
+```

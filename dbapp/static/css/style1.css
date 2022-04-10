@@ -176,22 +176,27 @@
 }
     
 #btn-10 {
-    margin-top: -140px;
+    margin-top: -160px;
     margin-right: -55px;
 }
 
 #btn-11 {
-    margin-top: -80px;
+    margin-top: -100px;
     margin-right: -55px;
 }
 
 #btn-12 {
-    margin-top: -20px;
+    margin-top: -40px;
     margin-right: -55px;
 }
 
 #btn-13 {
-    margin-top: 40px;
+    margin-top: 20px;
+    margin-right: -55px;
+}
+
+#btn-14 {
+    margin-top: 80px;
     margin-right: -55px;
     background-color: cadetblue;
 }

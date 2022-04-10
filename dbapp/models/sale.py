@@ -9,6 +9,7 @@ from dbapp.models.joins import agents_sales, buyers_sales
 class Sale(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
+    office_id = db.Column(db.Integer, db.ForeignKey('office.id'))
     date_added = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     #one sale can have many commissions depending on no. of listing agents, but each individual commission can have only one sale
@@ -37,6 +38,7 @@ class SalesView(ModelView):
 
     column_default_sort = [('date_added', True)] #displays sorted view of bought and high price
 
+    
     def is_accessible(self):
         return current_user.is_authenticated
 

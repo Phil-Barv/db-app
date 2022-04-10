@@ -250,6 +250,7 @@ def create_sales_and_commissions():
         agents = [agent.Agent.query.get(a.id) for a in sample_houses[buyers].agents_houses]
         house_price = sample_houses[buyers].price
         house_id = sample_houses[buyers].id
+        house_office_id = house.House.query.get(house_id).office_id
         comm = calculate_commission(house_price, len(agents))
 
         sale_date = fake.date_between(start_date=start_date, end_date=end_date).strftime('%Y-%m-%d')
@@ -273,8 +274,8 @@ def create_sales_and_commissions():
 
             #print(f'Sale: House ID: {house_id} Sold: {True} Commissions {comm_list} Agents {agents} Buyers {new_owners} \n')
 
-            (db.session.add(sale.Sale(house_id=house_id, date_added=date_obj, commission_list=comm_list, agents_sales=agents, 
-                                      house_price=house_price, buyers_sales=new_owners)))
+            (db.session.add(sale.Sale(house_id=house_id, office_id=house_office_id, date_added=date_obj, commission_list=comm_list, 
+                                      agents_sales=agents, house_price=house_price, buyers_sales=new_owners)))
                                       
             house_to_update = house.House.query.get(house_id)
             house_to_update.is_sold = True

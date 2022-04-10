@@ -10,6 +10,7 @@ from dbapp import app, db
 bcrypt = Bcrypt(app)
 
 from dbapp.models import administrator, agent, buyer, city, commission, house, office, sale, seller
+from dbapp.dashboard import *
 from dbapp.queries import *
 
 #Set up login manager
@@ -19,26 +20,26 @@ login_manager.login_view = 'login'
 
 #create login decorator
 
-
 @login_manager.user_loader
 def load_user(id):
     return administrator.Admins.query.get(int(id))
 
+month_year = datetime.utcnow().strftime('%m/%Y')
+
+
+#custom admin view
 
 class CustomAdminIndexView(AdminIndexView):
     @expose('/')
     def index(self):
-        month_year = datetime.utcnow().strftime('%m/%Y')
         data = {
             'top_seller': get_top_seller(),
-            'top_agent': get_top_agent(),
-            'top_buyer': get_top_buyer(),
+            'top_agent' : get_top_agent(),
+            'top_buyer' : get_top_buyer(),
             'top_office': get_top_office(),
-            'month_year':  month_year[:3]+month_year[5:],
+            'summary'   : get_all_listings(),
         }
-
-        get_top_sellers()
-        
+    
         self._template_args['dashboard'] = (data)
         return super(CustomAdminIndexView, self).index()
 
@@ -67,6 +68,8 @@ admin.add_views(
     sale.SalesView(sale.Sale, db.session, name='Sales'),
 )
 
+#login/signup routes
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -76,29 +79,34 @@ def index():
 def login():
     return render_template('login.html')
 
-
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
 
-class task():
-    def __init__(self):
-        self.title = "Name Goes Here is here"
-        self.description = "Description is Here"
+#monthly insights
 
-@app.route('/insights')
+@app.route('/insights/top_5_agents', methods=['POST','GET'])
 @login_required
-def insights():
-    task_list = [ 
-        task(),
-        task(),
-        task(),
-        task(),
-        task(),
-    ]
+def insights_get_top_5_agents():
+    return render_template('insights.html', info_list=get_top_5_agents(), currentMonth=month_year)
 
-    #test_query()
-    return render_template('insights.html', task_list=task_list)
+@app.route('/insights/top_5_offices', methods=['POST','GET'])
+@login_required
+def insights_get_top_5_offices():
+    return render_template('insights.html', info_list=get_top_5_offices(), currentMonth=month_year)
+    
+@app.route('/insights/average_house_selling_price', methods=['POST','GET'])
+@login_required
+def insights_get_avg_selling_price():
+    return render_template('insights.html', info_list=get_avg_selling_price(), currentMonth=month_year)
+
+@app.route('/insights/average_house_listing_time', methods=['POST','GET'])
+@login_required
+def insights_get_avg_listing_time():
+    return render_template('insights.html', info_list=get_avg_listing_time(), currentMonth=month_year)
+
+
+#analytics
 
 @app.route('/analytics/annual_sales', methods=['POST','GET'])
 @login_required

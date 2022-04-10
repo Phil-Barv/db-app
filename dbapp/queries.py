@@ -1,84 +1,88 @@
-from flask import session
 from dbapp import db
-from dbapp.models import agent, buyer, city, house, office, sale, seller
-from sqlalchemy import desc, func
+from sqlalchemy.sql import text
+from datetime import datetime
+from dateutil import parser
 
-def get_top_seller():
-    #tried this advanced query using sqlalchemy but would not load relational data, returned only Trues and Falses
-    #https://stackoverflow.com/questions/65480238/why-am-i-unable-to-generate-a-query-using-relationships
+currentMonth = datetime.utcnow().strftime('%Y-%m') + '-01'
+nextMonth = datetime.utcnow().strftime('%Y-') + f"{(int(datetime.utcnow().strftime('%m'))+1):02d}" + '-01'
 
-    temp = ['Add Clients', 0]
+def get_top_5_agents():
 
-    for client in db.session.query(seller.Seller).all():
-        if len(client.houses) > temp[1]:
-            temp = [f'{client.firstname} {client.lastname}', len(client.houses)]
+    qry = text(
+                "SELECT agent.firstname, agent.lastname, agent.email, SUM(commission.house_price) as revenue, COUNT(*) "
+                "FROM agent "
+                "INNER JOIN commission ON commission.agent_id = agent.id "
+               f"WHERE DATE(commission.date_added) BETWEEN '{currentMonth}' AND '{nextMonth}' "  #end date is exclusive
+                "GROUP BY agent.firstname "
+                "ORDER BY revenue DESC LIMIT 5 "
+        )
 
-    return temp
+    result = db.session.execute(qry)
 
+    #create list to render in frontend
+    info_list = ['Top Five Agents | Most Revenue', 
+                [[ f"Agent Full Name: {i[0]} {i[1]} - Company Email: {i[2]}", "${:,.2f}".format(i[3]), i[4]] for i in result]]
 
-def get_top_sellers():
-    qry = (db.session.query(seller.Seller)
-                .select_from(house.House)
-                .join(house.House.sellers_houses)
-                .with_entities(seller.Seller.houses))
+    return info_list
 
-    print(qry[0])
+def get_top_5_offices():
 
+    #technically industry standard is to check net profit rather than number of sales but both have been captured here
+    qry = text(
+                "SELECT office.address, SUM(sale.house_price) AS revenue, COUNT(*) AS sales "
+                "FROM office "
+                "INNER JOIN sale ON sale.office_id = office.id "
+               f"WHERE DATE(sale.date_added) BETWEEN '{currentMonth}' AND '{nextMonth}' "  #end date is exclusive
+                "GROUP BY office.address "
+                "ORDER BY revenue DESC LIMIT 5 "
+        )
 
-def get_top_buyer():
+    result = db.session.execute(qry)
 
-    temp = ['Add Clients', 0]
+    #create list to render in frontend
+    info_list = ['Top Five Offices | Most Revenue', [[ i[0], "${:,.2f}".format(i[1]), i[2]] for i in result]]
+    return info_list
 
-    for client in db.session.query(buyer.Buyer).all():
-        if len(client.sales) > temp[1]:
-            temp = [f'{client.firstname} {client.lastname}', len(client.sales)]
+def get_avg_selling_price():
 
-    return temp
+    #For all houses that were sold that month, calculate the average selling price
 
-def get_top_agent():
+    qry = text(
+               "SELECT house.address, AVG(sale.house_price) as avg, COUNT(*) as sales "
+               "FROM house "
+               "INNER JOIN sale ON sale.house_id = house.id "
+              f"WHERE DATE(sale.date_added) BETWEEN '{currentMonth}' AND '{nextMonth}' "  #end date is exclusive
+        )
 
-    temp = ['Add Agents', 0]
+    result = db.session.execute(qry)
 
-    for agents in db.session.query(agent.Agent).all():
-        if len(agents.sales) > temp[1]:
-            temp = [f'{agents.firstname} {agents.lastname}', len(agents.sales)]
-
-    return temp
-
-
-from collections import Counter
-
-
-def get_top_office():
-
-    temp = ['Add Sales', 0]
-    offices = []
-
-    for hse in db.session.query(house.House).all():
-        if hse.is_sold:
-            offices.append(hse.office)
-
-    if len(offices) > 0:
-        frequency = Counter(offices)
-
-        top_offices = [str(name).split(',')[0] for name, count in frequency.items() if count == max(frequency.values())]
-        top_offices = ', '.join(map(str, top_offices))
-
-        return top_offices, max(frequency.values())
-
-    return temp
+    #create list to render in frontend
+    info_list = ['Average Selling Price | Monthly Data',[[ f"Houses sold: 1. {i[0]}, . . .","${:,.2f} AVG".format(i[1]), i[2]] for i in result]]
+    
+    return info_list
 
 
-def test_query():
+def get_avg_listing_time():
 
-    qry = (db.session
-                  .query(agent.Agent.lastname, office.Office.address, func.sum(sale.Sale.house_price))
-                  .join(agent.Agent, sale.Sale.agents_sales == agent.Agent.sales)
-                  .join(office.Office, agent.Agent.offices == office.Office.agents_offices)
-                  .group_by(agent.Agent.id)
-                  .orderby(desc(func.sum(sale.Sale.house_price)))
-                  .limit(5)
+    #For all houses that were sold that month, calculate the average number of days that the houses were on the market.
+    #datediff as described in this article did not work https://www.sqlservertutorial.net/sql-server-date-functions/sql-server-datediff-function/
+
+    qry = text(
+            "SELECT house.address, house.date_added, sale.date_added "
+            "FROM house "
+            "INNER JOIN sale ON sale.house_id = house.id "
+            f"WHERE DATE(sale.date_added) BETWEEN '{currentMonth}' AND '{nextMonth}' "  #end date is exclusive
+             "GROUP BY house.address "
     )
 
-    print(qry)
-        
+    result = db.session.execute(qry)
+
+    from datetime import datetime
+
+    #process date deltas
+    data = [[i[0], datetime.strptime(i[1], '%Y-%m-%d %H:%M:%S.%f'), datetime.strptime(i[2], '%Y-%m-%d %H:%M:%S.%f')] for i in result]
+    days = [abs((i[2] - i[1]).days) for i in data]
+
+    info_list = ['Average Listing Time | Monthly Data', [[ f"Houses sold: 1. {data[0][0]}, . . .","AVG {:,.2f} DAYS".format(sum(days)/len(days)), len(days)]]]
+   
+    return info_list

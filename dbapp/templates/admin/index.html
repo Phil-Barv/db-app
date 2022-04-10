@@ -17,7 +17,7 @@
         <div class="col-md-4 col-xl-3">
             <div class="card bg-c-blue order-card">
                 <div class="card-block">
-                    <h6 class="m-b-20">Top Client | Most Listings</h6>
+                    <h6 class="m-b-20">Top Client | All Listings</h6>
                     <h2 class="text-right"><i class="fa fa-heartbeat f-left"></i><span>{{ dashboard['top_seller'][1] }}</span></h2>
                     <p class="m-b-0">{{ dashboard['top_seller'][0] }}<span class="f-right">{{ dashboard['month_year'] }}</span></p>
                 </div>
@@ -25,9 +25,9 @@
  
             <div class="card bg-c-green order-card">
                 <div class="card-block">
-                    <h6 class="m-b-20">Top Agent | Most Sales</h6>
+                    <h6 class="m-b-20">Top Agent | All Sales</h6>
                     <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>{{ dashboard['top_agent'][1] }}</span></h2>
-                    <p class="m-b-0">{{ dashboard['top_agent'][0] }}<span class="f-right">{{ dashboard['month_year'] }}</span></p>
+                    <p class="m-b-0">{{ dashboard['top_agent'][0] }}<span class="f-right"></p>
                 </div>
             </div>
         </div>
@@ -35,17 +35,17 @@
         <div class="col-md-4 col-xl-3">
             <div class="card bg-c-yellow order-card">
                 <div class="card-block">
-                    <h6 class="m-b-20">Top Client | Most Buys</h6>
+                    <h6 class="m-b-20">Top Client | All Purchases</h6>
                     <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>{{ dashboard['top_buyer'][1] }}</span></h2>
-                    <p class="m-b-0">{{ dashboard['top_buyer'][0] }}<span class="f-right">{{ dashboard['month_year'] }}</span></p>
+                    <p class="m-b-0">{{ dashboard['top_buyer'][0] }}<span class="f-right"></p>
                 </div>
             </div>
         
             <div class="card bg-c-pink order-card">
                 <div class="card-block">
-                    <h6 class="m-b-20">Top Office | Most Sales</h6>
+                    <h6 class="m-b-20">Top Office | All Sales</h6>
                     <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>{{ dashboard['top_office'][1] }}</span></h2>
-                    <p class="m-b-0">{{ dashboard['top_office'][0] }} <span class="f-right">{{ dashboard['month_year'] }}</span></p>
+                    <p class="m-b-0">{{ dashboard['top_office'][0] }}</p>
                 </div>
             </div>
         </div>
@@ -53,9 +53,9 @@
         <div class="col-md-4 col-xl-3">
              <div class="card bg-c-blue order-card" id="big">
                 <div class="card-block">
-                    <h6 class="m-b-20">Properties Summary</h6>
-                    <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>486</span></h2>
-                    <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>
+                    <h6 class="m-b-20">Summary | Listed Properties</h6>
+                    <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>{{ dashboard['summary'][1] }}</span></h2>
+                    <p class="m-b-0">{{ dashboard['summary'][0] }}</p>
                 </div>
             </div>
         </div>

@@ -346,12 +346,6 @@ a.article:hover {
 
 .bg-c-pink {
     background: linear-gradient(45deg,#fc90a2,#c47a86);
-    padding-bottom: 0!important;
-}
-
-.bg-c-pink p {
-    padding-top: 10px !important;
-    height: 72px;
 }
 
 .card {
