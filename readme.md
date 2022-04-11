@@ -1,6 +1,10 @@
 # DB-APP_162
 
-This is a Database app that realistically models a large realtor company with multiple property listings, agents, locations, and sellers. The app is built on the Flask micro-framework, using SQLAlchemy database models to capture the relationships between the data and flask-login that restricts data access to admins. The dashboard features long-term summaries while the collapsable sidebar offers views of each data model. Detailed analytics of the data are available by clicking on the Analystics button, and monthly summaries via the Monthly Insights button. As of now, the views have been implemented for view-only purposes rather than edit/update purposes. Make sure to populate the database using the automated system specifically created to emulate real-world data with its high scalability, distinct individuals, houses, offices, cities and generation of sales between 2021 and 2023.
+This is a Database app that realistically models a large realtor company with multiple property listings, agents, locations, and sellers. The app is built on the Flask micro-framework, using SQLAlchemy database models to capture the relationships between the data and flask-login that restricts data access to admins. 
+
+The dashboard features long-term summaries while the collapsable sidebar offers views of each data model. Detailed analytics of the data are available by clicking on the Analystics button, and monthly summaries via the Monthly Insights button. As of now, the views have been implemented for view-only purposes rather than edit/update purposes. 
+
+Make sure to populate the database using the automated system specifically created to emulate real-world data with its high scalability, distinct individuals, houses, offices, cities and generation of sales between 2021 and 2023 for the full experience.
 
 
 ### Getting the app running
