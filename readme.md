@@ -14,7 +14,7 @@ This is a Database app that realistically models a large realtor company with mu
 python3.6 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
-python3.6 populate.py #required to populate database
+python3.6 create.py #required to populate database
 python3.6 app.py
 ```
 
@@ -23,7 +23,7 @@ python3.6 app.py
 python3.6 -m venv venv
 venv\Scripts\activate.bat
 pip3 install -r requirements.txt
-python3.6 populate.py #skip if database population not required
+python3.6 create.py
 python3.6 app.py
 ```
 
@@ -32,7 +32,7 @@ python3.6 app.py
 python3.6 -m venv venv
 venv/Scripts/activate.bat
 pip3 install -r requirements.txt
-python3.6 populate.py #skip if database population not required
+python3.6 create.py
 python3.6 app.py
 ```
 
