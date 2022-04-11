@@ -57,7 +57,7 @@ admin = Admin(app, name="Dunder Mifflin Realtors", template_mode='bootstrap4', i
 
 #add data views
 admin.add_views(
-    administrator.AdminsView(administrator.Admins, db.session, name='Administators'),
+    administrator.AdminsView(administrator.Admins, db.session, name='Administrators'),
     agent.AgentsView(agent.Agent, db.session, name='Agents'),
     buyer.BuyersView(buyer.Buyer, db.session, name='Buyers'),
     city.CitiesView(city.City, db.session, name='Cities'),

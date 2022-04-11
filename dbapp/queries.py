@@ -8,7 +8,7 @@ from datetime import datetime
 currentMonth = datetime.utcnow().strftime('%Y-%m') + '-01'
 nextMonth = datetime.utcnow().strftime('%Y-') + f"{(int(datetime.utcnow().strftime('%m'))+1):02d}" + '-01'
 
-def get_top_5_agents():
+def get_top_5_agents(db=db):
 
     qry = text(
                 "SELECT agent.firstname, agent.lastname, agent.email, SUM(commission.house_price) as revenue, COUNT(*) "
@@ -27,7 +27,7 @@ def get_top_5_agents():
 
     return info_list
 
-def get_top_5_offices():
+def get_top_5_offices(db=db):
 
     #technically industry standard is to check net profit rather than number of sales but both have been captured here
     qry = text(
@@ -45,7 +45,7 @@ def get_top_5_offices():
     info_list = ['Top Five Offices | Most Revenue', [[ i[0], "${:,.2f}".format(i[1]), i[2]] for i in result]]
     return info_list
 
-def get_avg_selling_price():
+def get_avg_selling_price(db=db):
 
     #For all houses that were sold that month, calculate the average selling price
 
@@ -64,7 +64,7 @@ def get_avg_selling_price():
     return info_list
 
 
-def get_avg_listing_time():
+def get_avg_listing_time(db=db):
 
     #For all houses that were sold that month, calculate the average number of days that the houses were on the market.
     #datediff as described in this article did not work https://www.sqlservertutorial.net/sql-server-date-functions/sql-server-datediff-function/

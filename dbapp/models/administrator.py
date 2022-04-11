@@ -5,7 +5,7 @@ from datetime import datetime
 from dbapp import db
 from dbapp.routes import bcrypt
 
-#created this unnecessary class cause I didn't want to delete my login and signup forms 
+#created this model to restrict accesss into platform to admins only
 class Admins(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)

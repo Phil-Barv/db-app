@@ -41,7 +41,7 @@ that you can use to access the platform.
 
 5. Paste the URL link into your favorite browser (Google Chrome is recommended) and voila! You now have a database management system. Enjoy!
 
-As a side note, the app also features 4 in-built tests to confirm that the required SQL queries return the right results. You can run them once you have populated the database by using the following command:
+As a side note, the app also features 4 in-built tests to confirm that the required SQL queries return the right results. You can run them before or after populating the database as they are independent tests. To do so, use the following command:
 
 ```python3
 python3.6 test.py
