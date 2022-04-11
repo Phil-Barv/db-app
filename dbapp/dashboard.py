@@ -35,7 +35,7 @@ def get_top_agent():
                 "FROM agent "
                 "INNER JOIN commission ON commission.agent_id = agent.id "
                 "GROUP BY agent.firstname "
-                "ORDER BY sales DESC LIMIT 1 "
+                "ORDER BY revenue DESC LIMIT 1 "
         )
 
     result = db.session.execute(qry)

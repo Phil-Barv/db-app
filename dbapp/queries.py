@@ -1,7 +1,9 @@
 from dbapp import db
 from sqlalchemy.sql import text
 from datetime import datetime
-from dateutil import parser
+
+#Indices on dates have been immplemented for faster queries as I use dates to filter results in the where clauses
+#This practice is inline with this article: https://stackoverflow.com/questions/107132/what-columns-generally-make-good-indexes
 
 currentMonth = datetime.utcnow().strftime('%Y-%m') + '-01'
 nextMonth = datetime.utcnow().strftime('%Y-') + f"{(int(datetime.utcnow().strftime('%m'))+1):02d}" + '-01'
@@ -48,7 +50,7 @@ def get_avg_selling_price():
     #For all houses that were sold that month, calculate the average selling price
 
     qry = text(
-               "SELECT house.address, AVG(sale.house_price) as avg, COUNT(*) as sales "
+               "SELECT house.address, AVG(sale.house_price), COUNT(*)"
                "FROM house "
                "INNER JOIN sale ON sale.house_id = house.id "
               f"WHERE DATE(sale.date_added) BETWEEN '{currentMonth}' AND '{nextMonth}' "  #end date is exclusive

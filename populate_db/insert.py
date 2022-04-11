@@ -6,7 +6,7 @@ from populate_db.libraries import all_cities_with_zipcodes
 
 
 import datetime
-#generate random sales between these dates
+#generate random sales between these dates --> make sure range includes the current month you're in
 start_date = datetime.date(year=2020, month=11, day=1)
 end_date = datetime.date(year=2023, month=4, day=4)
 

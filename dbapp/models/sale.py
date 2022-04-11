@@ -10,11 +10,11 @@ class Sale(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
     office_id = db.Column(db.Integer, db.ForeignKey('office.id'))
-    date_added = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
 
     #one sale can have many commissions depending on no. of listing agents, but each individual commission can have only one sale
     commission_list = db.relationship('Commission', lazy='select', backref=db.backref('sale', lazy='joined'))
-    house_price = db.Column(db.Numeric(11, 2), nullable=False)
+    house_price = db.Column(db.Numeric(11, 2), nullable=False, index=True)
 
     #many to many relationship to agents
     agents_sales = db.relationship('Agent', secondary=agents_sales, lazy='subquery',
